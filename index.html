@@ -3,29 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Structured-State DQN for Xpilot — Muhammad Abdullah (COM 407)</title>
+  <title>Hybrid Imitation - Reinforcement Learning for Xpilot - Muhammad Abdullah (COM 407)</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap3X...replaceWithFullHash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
   <link rel="stylesheet" href="style.css">
-
   <style>html { scroll-behavior: smooth; }</style>
 </head>
-<body>
 
+
+<body>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="#home">
         <span class="logo">🌐</span>
         <span class="brand-text">Muhammad Abdullah - COM 407</span>
+
+
       </a>
 
       <input id="nav-toggle" type="checkbox" class="nav-toggle" />
       <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
         <span></span>
       </label>
+
+
 
       <nav class="nav">
         <a href="#home"><i class="fa fa-house"></i> Home</a>
@@ -43,72 +46,86 @@
     <section id="home" class="hero">
       <div class="container hero-grid">
         <div class="hero-text">
-          <h1>Structured-State Deep Q-Learning for Xpilot</h1>
-          <p class="subtitle">Training an autonomous survival agent using structured numerical state representations - <strong>COM 407</strong></p>
+
+          <h1>Hybrid Imitation - Reinforcement Learning for Xpilot</h1>
+          <p class="subtitle">A hybrid pipeline to train an autonomous agent using imitation learning followed by reinforcement fine-tuning - <strong>COM 407</strong></p>
           <p>
-            This project explores how structured-state inputs improve training speed and stability for Deep Q-Learning agents in a simplified 2D Xpilot-style environment.
+
+            This project combines behavior cloning from demonstrations with Deep Q-Learning fine-tuning so the agent learns basic control from examples and improves with experience.
           </p>
+
           <p class="hero-ctas">
             <a class="btn" href="#overview">View Project Details</a>
+
+
             <a class="btn btn-outline" href="proposal.pdf" download>View Proposal (PDF)</a>
           </p>
         </div>
 
         <div class="hero-media">
+
           <img src="images/agent_demo.gif" alt="Agent demo GIF (placeholder)" />
-          <figcaption class="caption">Agent survival demo</figcaption>
-          <!-- Neural network gif for now -->
+          <figcaption class="caption">_</figcaption>
         </div>
       </div>
     </section>
 
     <section id="overview" class="section">
+
       <div class="container">
         <h2><i class="fa fa-book-open"></i> Overview</h2>
         <p class="lead">
-          <strong>Motivation:</strong> Pixel-based RL approaches require heavy compute and long training times. Using a structured numerical state reduces input complexity and enables faster, more stable learning while keeping the adaptability of DRL.
+          <strong>Motivation:</strong> Pure reinforcement learning can be slow to train. Imitation learning provides an initial policy and reinforcement fine-tuning improves that policy further. This hybrid approach leverages structured-state inputs to speed up learning and keep training stable.
         </p>
 
         <h3>Objectives</h3>
         <ul class="feature-list">
-          <li><i class="fa fa-dot-circle"></i> Build a simplified Xpilot environment that provides structured-state data.</li>
-          <li><i class="fa fa-dot-circle"></i> Implement and train a Deep Q-Network (DQN) maximizing survival time.</li>
-          <li><i class="fa fa-dot-circle"></i> Evaluate and visualize training performance across experiments.</li>
+
+          <li><i class="fa fa-dot-circle"></i> Record demonstration data and build a behavior cloning baseline.</li>
+          <li><i class="fa fa-dot-circle"></i> Implement and train a DQN initialized from the imitation model to fine-tune performance.</li>
+          <li><i class="fa fa-dot-circle"></i> Evaluate and visualize performance for rule-based, imitation-only, and hybrid agents.</li>
         </ul>
 
         <div class="flow">
           <strong>Idea flow:</strong>
-          <span>Environment → Structured State → DQN → Actions → Rewards → Improved Policy</span>
+
+
+          <span>Environment -&gt; Structured State -&gt; Imitation Model -&gt; DQN Fine-tuning -&gt; Actions -&gt; Rewards -&gt; Improved Policy</span>
         </div>
       </div>
+
+
     </section>
 
     <section id="methods" class="section alt">
       <div class="container">
         <h2><i class="fa fa-cogs"></i> Methodology</h2>
 
+
+
         <h3>Environment design</h3>
         <p>
-          The environment is a 2D continuous space with the agent, enemies, projectiles, and walls. Episodes terminate on agent death or time limit.
+          The environment is a 2D continuous arena with the agent, enemies, projectiles, and walls. Episodes end on agent death or a fixed time limit. An environment wrapper provides a normalized structured state and accepts discrete actions.
         </p>
 
         <h3>Structured-state representation</h3>
         <p>
-          Observations are fixed-length vectors (normalized): agent state <code>x,y,vx,vy,θ</code>, nearest N enemies (relative dx,dy,dist,heading), nearest M bullets (dx,dy,dist,velx,vely), raycast wall distances, and action cooldown flags.
+          Observations are fixed-length numeric vectors: agent state <code>x, y, v, theta</code>, nearest N enemies (relative dx, dy, dist, heading), nearest M bullets (dx, dy, dist, vel, heading), and wall distances.
         </p>
 
-        <h3>DQN & training</h3>
+        <h3>Imitation and DQN pipeline</h3>
         <p>
-          A feed-forward Deep Q-Network (fully connected) is used with Double DQN, a target network, epsilon-greedy exploration and experience replay. Reward shaping emphasizes survival (+per-timestep) and penalizes death and collisions.
+          First the agent is trained with supervised behavior cloning on demonstration recordings. The same network architecture is used to initialize a Deep Q-Network for reinforcement fine-tuning. DQN training uses experience replay, a target network, epsilon-greedy exploration, and Double DQN updates.
         </p>
 
         <div class="two-col">
           <div>
             <h4>Key hyperparameters</h4>
             <ul>
-              <li><i class="fa fa-check"></i> Learning rate: 1e-4</li>
-              <li><i class="fa fa-check"></i> Batch size: 64</li>
-              <li><i class="fa fa-check"></i> Discount (γ): 0.99</li>
+              <li><i class="fa fa-check"></i> Learning rate: still loading</li>
+              <li><i class="fa fa-check"></i> Batch size: still loading</li>
+
+              <li><i class="fa fa-check"></i> Discount (gamma): still loading</li>
             </ul>
           </div>
           <div>
@@ -116,40 +133,40 @@
             <ul>
               <li><i class="fa fa-check"></i> Average survival time</li>
               <li><i class="fa fa-check"></i> Episode reward</li>
-              <li><i class="fa fa-check"></i> Trajectory heatmaps & gifs</li>
             </ul>
           </div>
+
         </div>
+
+
       </div>
     </section>
 
-    <!-- RESULTS -->
     <section id="results" class="section">
       <div class="container">
         <h2><i class="fa fa-chart-line"></i> Results</h2>
 
-        <p class="lead">Summary of findings (example / placeholder text — replace with your actual results):</p>
+        <p class="lead">Summary of findings</p>
 
         <ul class="result-list">
-          <li><strong>Faster convergence:</strong> Structured-state DQN converged significantly faster than comparable pixel-baseline.</li>
-          <li><strong>Improved survival:</strong> Average episode survival increased from ~120 timesteps (random) to ~560 timesteps (trained agent).</li>
-          <li><strong>Behaviors learned:</strong> wall avoidance, basic enemy evasion, selective shooting.</li>
+          <li><strong>Imitation baseline:</strong> Still Loading</li>
+          <li><strong>DQN fine-tuning:</strong> Still Loading</li>
         </ul>
 
         <div class="results-grid">
           <figure>
             <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Learning curve - performance vs attempts</figcaption>
+            <figcaption>Still Loading</figcaption>
           </figure>
           
           <figure>
             <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Learning curve - performance vs attempts</figcaption>
+            <figcaption>Still Loading</figcaption>
           </figure>
 
           <figure>
             <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Learning curve - performance vs attempts</figcaption>
+            <figcaption>Still Loading</figcaption>
           </figure>
         </div>
       </div>
@@ -159,10 +176,9 @@
       <div class="container">
         <h2><i class="fa fa-lightbulb"></i> Future Work</h2>
         <ol>
-          <li>Do this in future.</li>
-          <li>Do this in future.</li>
-          <li>Do this in future.</li>
-
+          <li>Still Loading</li>
+          <li>Still Loading</li>
+          <li>Still Loading</li>
         </ol>
       </div>
     </section>
