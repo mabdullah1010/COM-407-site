@@ -1,1 +1,191 @@
-<h1>Hello</h1>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Structured-State DQN for Xpilot — Muhammad Abdullah (COM 407)</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap3X...replaceWithFullHash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>html { scroll-behavior: smooth; }</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home">
+        <span class="logo">🌐</span>
+        <span class="brand-text">Muhammad Abdullah - COM 407</span>
+      </a>
+
+      <input id="nav-toggle" type="checkbox" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
+        <span></span>
+      </label>
+
+      <nav class="nav">
+        <a href="#home"><i class="fa fa-house"></i> Home</a>
+        <a href="#overview"><i class="fa fa-book-open"></i> Overview</a>
+        <a href="#methods"><i class="fa fa-cogs"></i> Methodology</a>
+        <a href="#results"><i class="fa fa-chart-line"></i> Results</a>
+        <a href="#future"><i class="fa fa-lightbulb"></i> Future Work</a>
+        <a href="#contact"><i class="fa fa-envelope"></i> Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <h1>Structured-State Deep Q-Learning for Xpilot</h1>
+          <p class="subtitle">Training an autonomous survival agent using structured numerical state representations - <strong>COM 407</strong></p>
+          <p>
+            This project explores how structured-state inputs improve training speed and stability for Deep Q-Learning agents in a simplified 2D Xpilot-style environment.
+          </p>
+          <p class="hero-ctas">
+            <a class="btn" href="#overview">View Project Details</a>
+            <a class="btn btn-outline" href="proposal.pdf" download>View Proposal (PDF)</a>
+          </p>
+        </div>
+
+        <div class="hero-media">
+          <img src="images/agent_demo.gif" alt="Agent demo GIF (placeholder)" />
+          <figcaption class="caption">Agent survival demo</figcaption>
+          <!-- Neural network gif for now -->
+        </div>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="container">
+        <h2><i class="fa fa-book-open"></i> Overview</h2>
+        <p class="lead">
+          <strong>Motivation:</strong> Pixel-based RL approaches require heavy compute and long training times. Using a structured numerical state reduces input complexity and enables faster, more stable learning while keeping the adaptability of DRL.
+        </p>
+
+        <h3>Objectives</h3>
+        <ul class="feature-list">
+          <li><i class="fa fa-dot-circle"></i> Build a simplified Xpilot environment that provides structured-state data.</li>
+          <li><i class="fa fa-dot-circle"></i> Implement and train a Deep Q-Network (DQN) maximizing survival time.</li>
+          <li><i class="fa fa-dot-circle"></i> Evaluate and visualize training performance across experiments.</li>
+        </ul>
+
+        <div class="flow">
+          <strong>Idea flow:</strong>
+          <span>Environment → Structured State → DQN → Actions → Rewards → Improved Policy</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="methods" class="section alt">
+      <div class="container">
+        <h2><i class="fa fa-cogs"></i> Methodology</h2>
+
+        <h3>Environment design</h3>
+        <p>
+          The environment is a 2D continuous space with the agent, enemies, projectiles, and walls. Episodes terminate on agent death or time limit.
+        </p>
+
+        <h3>Structured-state representation</h3>
+        <p>
+          Observations are fixed-length vectors (normalized): agent state <code>x,y,vx,vy,θ</code>, nearest N enemies (relative dx,dy,dist,heading), nearest M bullets (dx,dy,dist,velx,vely), raycast wall distances, and action cooldown flags.
+        </p>
+
+        <h3>DQN & training</h3>
+        <p>
+          A feed-forward Deep Q-Network (fully connected) is used with Double DQN, a target network, epsilon-greedy exploration and experience replay. Reward shaping emphasizes survival (+per-timestep) and penalizes death and collisions.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h4>Key hyperparameters</h4>
+            <ul>
+              <li><i class="fa fa-check"></i> Learning rate: 1e-4</li>
+              <li><i class="fa fa-check"></i> Batch size: 64</li>
+              <li><i class="fa fa-check"></i> Discount (γ): 0.99</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Evaluation</h4>
+            <ul>
+              <li><i class="fa fa-check"></i> Average survival time</li>
+              <li><i class="fa fa-check"></i> Episode reward</li>
+              <li><i class="fa fa-check"></i> Trajectory heatmaps & gifs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results" class="section">
+      <div class="container">
+        <h2><i class="fa fa-chart-line"></i> Results</h2>
+
+        <p class="lead">Summary of findings (example / placeholder text — replace with your actual results):</p>
+
+        <ul class="result-list">
+          <li><strong>Faster convergence:</strong> Structured-state DQN converged significantly faster than comparable pixel-baseline.</li>
+          <li><strong>Improved survival:</strong> Average episode survival increased from ~120 timesteps (random) to ~560 timesteps (trained agent).</li>
+          <li><strong>Behaviors learned:</strong> wall avoidance, basic enemy evasion, selective shooting.</li>
+        </ul>
+
+        <div class="results-grid">
+          <figure>
+            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
+            <figcaption>Learning curve - performance vs attempts</figcaption>
+          </figure>
+          
+          <figure>
+            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
+            <figcaption>Learning curve - performance vs attempts</figcaption>
+          </figure>
+
+          <figure>
+            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
+            <figcaption>Learning curve - performance vs attempts</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="future" class="section alt">
+      <div class="container">
+        <h2><i class="fa fa-lightbulb"></i> Future Work</h2>
+        <ol>
+          <li>Do this in future.</li>
+          <li>Do this in future.</li>
+          <li>Do this in future.</li>
+
+        </ol>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2><i class="fa fa-envelope"></i> Contact</h2>
+        <p><strong>Muhammad Abdullah</strong><br/>COM 407 @ Connecticut College</p>
+        <p>Email: <a href="mailto:mabdullah@conncoll.edu">mabdullah@conncoll.edu</a></p>
+        <p>
+          GitHub: <a href="https://github.com/mabdullah1010" target="_blank" rel="noopener">github.com/mabdullah1010</a>
+          &nbsp;•&nbsp;
+          LinkedIn: <a href="https://www.linkedin.com/in/iammuhammadabdullah" target="_blank" rel="noopener">https://www.linkedin.com/in/iammuhammadabdullah/</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© Muhammad Abdullah (COM 407) • Project showcase</small>
+    </div>
+  </footer>
+
+</body>
+</html>
