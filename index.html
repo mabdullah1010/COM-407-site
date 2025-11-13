@@ -62,7 +62,7 @@
       <div class="container">
         <h2><i class="fa fa-book-open"></i> Overview</h2>
         <p class="lead">
-          <strong>Motivation:</strong> Reinforcement learning in Xpilot is valuable but data intensive. My professor recommended focusing on imitation learning because a good imitation system for Xpilot is not yet established. The project studies whether combining demonstrations from agents with different specialties yields a better overall agent.
+          <strong>Motivation:</strong> Reinforcement learning in Xpilot is valuable but data intensive. A good imitation system for Xpilot is not yet established. The project studies whether combining demonstrations from agents with different specialties yields a better overall agent.
         </p>
 
         <h3>Objectives</h3>
@@ -90,17 +90,17 @@
 
         <h3>Structured-state representation</h3>
         <p>
-          Observations are fixed-length numeric vectors: agent state x, y, v, v, heading; enemies with relative distance, heading etc; bullets with dist, vel, heading; and wall distances.
+          Observations are fixed-length numeric vectors: agent state x, y, v, heading; enemies with relative distance, heading etc; bullets with dist, vel, heading; and wall distances.
         </p>
 
         <h3>Data collection and experts</h3>
         <p>
-          I will create or use three specialist agents to generate demonstrations: a dodger focused on survival, a shooter focused on accuracy, and a navigator focused on positioning and powerups. Each agent will run multiple episodes and log state-action pairs for training.
+          I will create or use specialist agents to generate demonstrations: e.g. a dodger focused on survival, a shooter focused on accuracy. Each agent will run multiple episodes and log state-action pairs for training.
         </p>
 
         <h3>Imitation training</h3>
         <p>
-          Train behavior cloning models using supervised learning with cross entropy loss. Experiment with training a unified model on the merged demonstration dataset and with ensemble approaches that combine specialist policies.
+          Train behavior cloning models using supervised learning.
         </p>
 
         <div class="two-col">
@@ -158,10 +158,8 @@
       <div class="container">
         <h2><i class="fa fa-check"></i> Expected Outcomes</h2>
         <ol>
-          <li>Fine-tune the combined model with reinforcement learning if time permits.</li>
           <li>A trained imitation learning model capable of playing XPilot competently using data from multiple experts.</li>
           <li>Insight into whether diverse training sources improve generalization and performance compared to single-expert imitation.</li>
-          <li>A framework that could later be extended to combine imitation and reinforcement learning, forming a foundation for more advanced hybrid models.</li>
         </ol>
       </div>
     </section>
