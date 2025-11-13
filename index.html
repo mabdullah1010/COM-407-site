@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hybrid Imitation - Reinforcement Learning for Xpilot - Muhammad Abdullah (COM 407)</title>
+  <title>Imitation Learning for Xpilot - Muhammad Abdullah (COM 407)</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -12,23 +12,18 @@
   <style>html { scroll-behavior: smooth; }</style>
 </head>
 
-
 <body>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="#home">
         <span class="logo">🌐</span>
         <span class="brand-text">Muhammad Abdullah - COM 407</span>
-
-
       </a>
 
       <input id="nav-toggle" type="checkbox" class="nav-toggle" />
       <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
         <span></span>
       </label>
-
-
 
       <nav class="nav">
         <a href="#home"><i class="fa fa-house"></i> Home</a>
@@ -41,104 +36,90 @@
     </div>
   </header>
 
-  <!-- HERO -->
   <main>
     <section id="home" class="hero">
       <div class="container hero-grid">
         <div class="hero-text">
-
-          <h1>Hybrid Imitation - Reinforcement Learning for Xpilot</h1>
-          <p class="subtitle">A hybrid pipeline to train an autonomous agent using imitation learning followed by reinforcement fine-tuning - <strong>COM 407</strong></p>
+          <h1>Imitation Learning for Xpilot</h1>
+          <p class="subtitle">Training robust agents from multiple specialists using structured-state demonstrations - <strong>COM 407</strong></p>
           <p>
-
-            This project combines behavior cloning from demonstrations with Deep Q-Learning fine-tuning so the agent learns basic control from examples and improves with experience.
+            This project focuses on imitation learning in the Xpilot environment. The primary goal is to record demonstrations from several specialist agents, train behavior cloning models, and evaluate whether a combined policy can outperform each specialist.
           </p>
-
           <p class="hero-ctas">
             <a class="btn" href="#overview">View Project Details</a>
-
-
             <a class="btn btn-outline" href="proposal.pdf" download>View Proposal (PDF)</a>
           </p>
         </div>
 
         <div class="hero-media">
-
           <img src="images/agent_demo.gif" alt="Agent demo GIF (placeholder)" />
-          <figcaption class="caption">_</figcaption>
+          <figcaption class="caption">Agent demonstration</figcaption>
         </div>
       </div>
     </section>
 
     <section id="overview" class="section">
-
       <div class="container">
         <h2><i class="fa fa-book-open"></i> Overview</h2>
         <p class="lead">
-          <strong>Motivation:</strong> Pure reinforcement learning can be slow to train. Imitation learning provides an initial policy and reinforcement fine-tuning improves that policy further. This hybrid approach leverages structured-state inputs to speed up learning and keep training stable.
+          <strong>Motivation:</strong> Reinforcement learning in Xpilot is valuable but data intensive. My professor recommended focusing on imitation learning because a good imitation system for Xpilot is not yet established. The project studies whether combining demonstrations from agents with different specialties yields a better overall agent.
         </p>
 
         <h3>Objectives</h3>
         <ul class="feature-list">
-
-          <li><i class="fa fa-dot-circle"></i> Record demonstration data and build a behavior cloning baseline.</li>
-          <li><i class="fa fa-dot-circle"></i> Implement and train a DQN initialized from the imitation model to fine-tune performance.</li>
-          <li><i class="fa fa-dot-circle"></i> Evaluate and visualize performance for rule-based, imitation-only, and hybrid agents.</li>
+          <li><i class="fa fa-dot-circle"></i> Record demonstration data from multiple specialist agents (e.g. dodger, shooter etc).</li>
+          <li><i class="fa fa-dot-circle"></i> Train behavior cloning models and a combined model using structured-state inputs.</li>
+          <li><i class="fa fa-dot-circle"></i> Evaluate and compare performance of specialist agents and the combined agent.</li>
         </ul>
 
         <div class="flow">
           <strong>Idea flow:</strong>
-
-
-          <span>Environment -&gt; Structured State -&gt; Imitation Model -&gt; DQN Fine-tuning -&gt; Actions -&gt; Rewards -&gt; Improved Policy</span>
+          <span>Environment -&gt; Structured State -&gt; Demonstrations -&gt; Behavior Cloning -&gt; Evaluation</span>
         </div>
       </div>
-
-
     </section>
 
     <section id="methods" class="section alt">
       <div class="container">
         <h2><i class="fa fa-cogs"></i> Methodology</h2>
 
-
-
         <h3>Environment design</h3>
         <p>
-          The environment is a 2D continuous arena with the agent, enemies, projectiles, and walls. Episodes end on agent death or a fixed time limit. An environment wrapper provides a normalized structured state and accepts discrete actions.
+          Xpilot is a 2D arena with agents, projectiles, powerups, and walls. Episodes terminate on agent death or a time limit. An environment wrapper will expose a normalized structured state vector and accept discrete actions.
         </p>
 
         <h3>Structured-state representation</h3>
         <p>
-          Observations are fixed-length numeric vectors: agent state <code>x, y, v, theta</code>, nearest N enemies (relative dx, dy, dist, heading), nearest M bullets (dx, dy, dist, vel, heading), and wall distances.
+          Observations are fixed-length numeric vectors: agent state x, y, v, v, heading; enemies with relative distance, heading etc; bullets with dist, vel, heading; and wall distances.
         </p>
 
-        <h3>Imitation and DQN pipeline</h3>
+        <h3>Data collection and experts</h3>
         <p>
-          First the agent is trained with supervised behavior cloning on demonstration recordings. The same network architecture is used to initialize a Deep Q-Network for reinforcement fine-tuning. DQN training uses experience replay, a target network, epsilon-greedy exploration, and Double DQN updates.
+          I will create or use three specialist agents to generate demonstrations: a dodger focused on survival, a shooter focused on accuracy, and a navigator focused on positioning and powerups. Each agent will run multiple episodes and log state-action pairs for training.
+        </p>
+
+        <h3>Imitation training</h3>
+        <p>
+          Train behavior cloning models using supervised learning with cross entropy loss. Experiment with training a unified model on the merged demonstration dataset and with ensemble approaches that combine specialist policies.
         </p>
 
         <div class="two-col">
           <div>
             <h4>Key hyperparameters</h4>
             <ul>
-              <li><i class="fa fa-check"></i> Learning rate: still loading</li>
-              <li><i class="fa fa-check"></i> Batch size: still loading</li>
-
-              <li><i class="fa fa-check"></i> Discount (gamma): still loading</li>
+              <li><i class="fa fa-check"></i> Learning rate: Still Loading</li>
+              <li><i class="fa fa-check"></i> Batch size: Still Loading</li>
+              <li><i class="fa fa-check"></i> Epochs / early stopping: Still Loading</li>
             </ul>
           </div>
           <div>
             <h4>Evaluation</h4>
             <ul>
               <li><i class="fa fa-check"></i> Average survival time</li>
-              <li><i class="fa fa-check"></i> Episode reward</li>
+              <li><i class="fa fa-check"></i> Comparison to specialist agents</li>
             </ul>
           </div>
-
         </div>
-
-
       </div>
     </section>
 
@@ -149,8 +130,9 @@
         <p class="lead">Summary of findings</p>
 
         <ul class="result-list">
-          <li><strong>Imitation baseline:</strong> Still Loading</li>
-          <li><strong>DQN fine-tuning:</strong> Still Loading</li>
+          <li><strong>Specialist demonstrations:</strong> Still Loading</li>
+          <li><strong>Imitation-only models:</strong> Still Loading</li>
+          <li><strong>Combined policy evaluation:</strong> Still Loading</li>
         </ul>
 
         <div class="results-grid">
@@ -172,13 +154,24 @@
       </div>
     </section>
 
+    <section id="expected" class="section alt">
+      <div class="container">
+        <h2><i class="fa fa-check"></i> Expected Outcomes</h2>
+        <ol>
+          <li>Fine-tune the combined model with reinforcement learning if time permits.</li>
+          <li>A trained imitation learning model capable of playing XPilot competently using data from multiple experts.</li>
+          <li>Insight into whether diverse training sources improve generalization and performance compared to single-expert imitation.</li>
+          <li>A framework that could later be extended to combine imitation and reinforcement learning, forming a foundation for more advanced hybrid models.</li>
+        </ol>
+      </div>
+    </section>
+
     <section id="future" class="section alt">
       <div class="container">
         <h2><i class="fa fa-lightbulb"></i> Future Work</h2>
         <ol>
-          <li>Still Loading</li>
-          <li>Still Loading</li>
-          <li>Still Loading</li>
+          <li>Fine-tune the combined model with reinforcement learning.</li>
+          <br>
         </ol>
       </div>
     </section>
