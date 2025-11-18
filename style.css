@@ -95,3 +95,73 @@ html,body { height:100%; margin:0; background: linear-gradient(180deg,#071025 0%
   .hero h1 { font-size:1.45rem; }
   .container { padding:1rem; }
 }
+
+:root{
+  --bg:#08101a;
+  --card:#0b1520;
+  --muted:#9fb0c8;
+  --accent:#3b82f6;
+  --accent-2:#2dd4bf;
+  --max:1100px;
+  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,#06101a 0%,#071423 100%);color:#e8f2fb}
+.container{max-width:var(--max);margin:0 auto;padding:2rem}
+.site-header{position:sticky;top:0;background:rgba(2,6,12,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+.nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;color:inherit;text-decoration:none}
+.logo{font-size:1.4rem}
+.brand-text{font-weight:600}
+.nav{display:flex;gap:.4rem;align-items:center}
+.nav a{color:var(--muted);text-decoration:none;padding:.5rem .75rem;border-radius:8px;display:inline-flex;gap:.5rem;align-items:center;font-weight:500}
+.nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
+.nav-toggle{display:none}
+.nav-toggle-label{display:none}
+.hero{padding:3.25rem 0}
+.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center}
+.hero-left h1{margin:0;font-size:1.9rem;line-height:1.05}
+.subtitle{color:var(--accent);margin:.5rem 0;font-weight:600}
+.summary{color:var(--muted);margin-bottom:1rem}
+.cta-row{margin-top:1rem}
+.btn{display:inline-block;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#02121a;padding:.6rem 1rem;border-radius:10px;text-decoration:none;font-weight:700;margin-right:.6rem}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)}
+.hero-right img{width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+.section{padding:2.25rem 0}
+.lead{color:var(--muted);margin-bottom:1rem}
+.info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.info-card{background:var(--card);padding:1rem;border-radius:10px;color:var(--muted)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.inputs ul{columns:2;margin:0;padding-left:1rem;color:var(--muted)}
+.performance{display:flex;gap:1rem;align-items:flex-start;margin-top:1rem}
+.perf-left{flex:1;background:var(--card);padding:1rem;border-radius:10px;color:var(--muted)}
+.perf-right{width:260px;background:var(--card);padding:1rem;border-radius:10px;color:var(--muted)}
+.acc-list{list-style:none;padding:0;margin:0}
+.acc-list li{margin:.45rem 0;color:#fff}
+.overall{color:var(--accent-2);margin-top:.6rem;font-weight:700}
+.image-full{margin-top:1.25rem;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:1rem;border-radius:10px}
+.image-full img{width:100%;height:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
+.section.alt{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
+.contact p{color:var(--muted)}
+.site-footer{padding:1.25rem 0;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02)}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:1.2rem}
+  .info-row{grid-template-columns:1fr;align-items:stretch}
+  .two-col{grid-template-columns:1fr}
+  .perf-right{width:auto}
+  .nav{position:fixed;top:70px;right:0;background:linear-gradient(180deg,#071322,#06101b);width:260px;height:calc(100vh - 80px);flex-direction:column;padding:1rem;transform:translateX(110%);transition:transform .25s;border-left:1px solid rgba(255,255,255,0.03)}
+  .nav a{padding:.85rem 1rem;border-radius:8px}
+  .nav-toggle{display:block}
+  .nav-toggle-label{display:flex;cursor:pointer;width:40px;height:40px;border-radius:8px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
+  .nav-toggle-label span{width:20px;height:2px;background:#fff;display:block;position:relative}
+  .nav-toggle-label span::before,.nav-toggle-label span::after{content:"";position:absolute;left:0;right:0;height:2px;background:#fff;display:block}
+  .nav-toggle-label span::before{top:-6px}
+  .nav-toggle-label span::after{top:6px}
+  .nav-toggle:checked ~ .nav{transform:translateX(0%)}
+}
+
+@media(max-width:480px){
+  .brand-text{display:none}
+  .container{padding:1rem}
+  .hero-left h1{font-size:1.4rem}
+}
