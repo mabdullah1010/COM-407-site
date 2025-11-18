@@ -4,14 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Imitation Learning for Xpilot - Muhammad Abdullah (COM 407)</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap3X...replaceWithFullHash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css">
-  <style>html { scroll-behavior: smooth; }</style>
+  <style>html{scroll-behavior:smooth}</style>
 </head>
-
 <body>
   <header class="site-header">
     <div class="container nav-wrap">
@@ -19,180 +16,169 @@
         <span class="logo">🌐</span>
         <span class="brand-text">Muhammad Abdullah - COM 407</span>
       </a>
-
       <input id="nav-toggle" type="checkbox" class="nav-toggle" />
       <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
         <span></span>
       </label>
-
       <nav class="nav">
-        <a href="#home"><i class="fa fa-house"></i> Home</a>
-        <a href="#overview"><i class="fa fa-book-open"></i> Overview</a>
-        <a href="#methods"><i class="fa fa-cogs"></i> Methodology</a>
-        <a href="#results"><i class="fa fa-chart-line"></i> Results</a>
-        <a href="#future"><i class="fa fa-lightbulb"></i> Future Work</a>
-        <a href="#contact"><i class="fa fa-envelope"></i> Contact</a>
+        <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#overview"><i class="fa-solid fa-book-open"></i> Overview</a>
+        <a href="#methods"><i class="fa-solid fa-cogs"></i> Methodology</a>
+        <a href="#results"><i class="fa-solid fa-chart-line"></i> Results</a>
+        <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
       </nav>
     </div>
   </header>
 
   <main>
     <section id="home" class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
+      <div class="container hero-inner">
+        <div class="hero-left">
           <h1>Imitation Learning for Xpilot</h1>
-          <p class="subtitle">Training robust agents from multiple specialists using structured-state demonstrations - <strong>COM 407</strong></p>
-          <p>
-            This project focuses on imitation learning in the Xpilot environment. The primary goal is to record demonstrations from several specialist agents, train behavior cloning models, and evaluate whether a combined policy can outperform each specialist.
-          </p>
-          <p class="hero-ctas">
-            <a class="btn" href="#overview">View Project Details</a>
-            <a class="btn btn-outline" href="proposal.pdf" download>View Proposal (PDF)</a>
+          <p class="subtitle">Training robust agents from multiple specialists using structured-state demonstrations</p>
+          <p class="summary">Project by Muhammad Abdullah for COM 407. Demonstrations from specialist agents are used to train a behavior-cloning model that maps 17 structured inputs to 4 discrete actions.</p>
+          <p class="cta-row">
+            <a class="btn" href="#overview">Project Details</a>
+            <a class="btn btn-outline" href="proposal.pdf" download>Download Proposal</a>
           </p>
         </div>
-
-        <div class="hero-media">
-          <img src="images/agent_demo.gif" alt="Agent demo GIF (placeholder)" />
-          <figcaption class="caption">Agent demonstration</figcaption>
+        <div class="hero-right">
+          <img src="images/agent_demo.gif" alt="Agent demonstration GIF">
         </div>
       </div>
     </section>
 
     <section id="overview" class="section">
       <div class="container">
-        <h2><i class="fa fa-book-open"></i> Overview</h2>
-        <p class="lead">
-          <strong>Motivation:</strong> Reinforcement learning in Xpilot is valuable but data intensive. A good imitation system for Xpilot is not yet established. The project studies whether combining demonstrations from agents with different specialties yields a better overall agent.
-        </p>
-
-        <h3>Objectives</h3>
-        <ul class="feature-list">
-          <li><i class="fa fa-dot-circle"></i> Record demonstration data from multiple specialist agents (e.g. dodger, shooter etc).</li>
-          <li><i class="fa fa-dot-circle"></i> Train behavior cloning models and a combined model using structured-state inputs.</li>
-          <li><i class="fa fa-dot-circle"></i> Evaluate and compare performance of specialist agents and the combined agent.</li>
-        </ul>
-
-        <div class="flow">
-          <strong>Idea flow:</strong>
-          <span>Environment -&gt; Structured State -&gt; Demonstrations -&gt; Behavior Cloning -&gt; Evaluation</span>
+        <h2>Overview</h2>
+        <p class="lead">This project studies whether combining demonstrations from agents specialized in different skills produces a stronger imitation policy. Demonstrations were collected from an expert system in competitive play.</p>
+        <div class="info-row">
+          <div class="info-card">
+            <h3>Training map</h3>
+            <p><code>lifeless.xp</code></p>
+          </div>
+          <div class="info-card">
+            <h3>Data collection</h3>
+            <p>Expert agent ran for over 15 minutes while competing with another copy of the same agent to generate demonstrations.</p>
+          </div>
+          <div class="info-card">
+            <h3>Libraries</h3>
+            <p>PyTorch · Matplotlib · scikit-learn</p>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="methods" class="section alt">
       <div class="container">
-        <h2><i class="fa fa-cogs"></i> Methodology</h2>
-
-        <h3>Environment design</h3>
-        <p>
-          Xpilot is a 2D arena with agents, projectiles, powerups, and walls. Episodes terminate on agent death or a time limit. An environment wrapper will expose a normalized structured state vector and accept discrete actions.
-        </p>
-
-        <h3>Structured-state representation</h3>
-        <p>
-          Observations are fixed-length numeric vectors: agent state x, y, v, heading; enemies with relative distance, heading etc; bullets with dist, vel, heading; and wall distances.
-        </p>
-
-        <h3>Data collection and experts</h3>
-        <p>
-          I will create or use specialist agents to generate demonstrations: e.g. a dodger focused on survival, a shooter focused on accuracy. Each agent will run multiple episodes and log state-action pairs for training.
-        </p>
-
-        <h3>Imitation training</h3>
-        <p>
-          Train behavior cloning models using supervised learning.
-        </p>
-
+        <h2>Methodology</h2>
+        <p class="lead">Behavior cloning using supervised learning on recorded state-action pairs. Inputs are normalized structured features; outputs are discrete action logits.</p>
         <div class="two-col">
           <div>
-            <h4>Key hyperparameters</h4>
-            <ul>
-              <li><i class="fa fa-check"></i> Learning rate: Still Loading</li>
-              <li><i class="fa fa-check"></i> Batch size: Still Loading</li>
-              <li><i class="fa fa-check"></i> Epochs / early stopping: Still Loading</li>
-            </ul>
+            <h4>Network</h4>
+            <p>Fully connected neural network with 2 hidden layers, 128 neurons each.</p>
+            <p>Outputs: shoot · turnLeft · turnRight · thrust</p>
           </div>
           <div>
-            <h4>Evaluation</h4>
-            <ul>
-              <li><i class="fa fa-check"></i> Average survival time</li>
-              <li><i class="fa fa-check"></i> Comparison to specialist agents</li>
-            </ul>
+            <h4>Training</h4>
+            <p>10000 epochs · learning rate 0.001 · optimizer: Adam</p>
           </div>
+        </div>
+        <div class="inputs">
+          <h4>Inputs (17 features)</h4>
+          <ul>
+            <li>agent_heading</li>
+            <li>agent_tracking</li>
+            <li>agent_speed</li>
+            <li>agent_aim</li>
+            <li>shot_alert</li>
+            <li>front_dist</li>
+            <li>back_dist</li>
+            <li>back_left_dist</li>
+            <li>back_right_dist</li>
+            <li>closest_dist</li>
+            <li>furthest_dist</li>
+            <li>closest_angle</li>
+            <li>furthest_angle</li>
+            <li>heading_tracking_diff</li>
+            <li>closest_diff</li>
+            <li>furthest_diff</li>
+            <li>aim_diff</li>
+          </ul>
         </div>
       </div>
     </section>
 
     <section id="results" class="section">
       <div class="container">
-        <h2><i class="fa fa-chart-line"></i> Results</h2>
+        <h2>Results</h2>
+        <p class="lead">Model achieved high per-action accuracy on held-out demonstration data.</p>
+        <div class="performance">
+          <div class="perf-left">
+            <h3>Per-action accuracy</h3>
+            <ul class="acc-list">
+              <li>Thrust: <strong>96.86%</strong></li>
+              <li>turnLeft: <strong>96.49%</strong></li>
+              <li>turnRight: <strong>96.34%</strong></li>
+              <li>fireShot: <strong>98.79%</strong></li>
+            </ul>
+            <p class="overall">Overall accuracy (all 4 actions combined): <strong>91.74%</strong></p>
+          </div>
+          <div class="perf-right">
+            <h3>Training details</h3>
+            <p>10000 epochs · learning rate 0.001 </p>
+          </div>
+        </div>
 
-        <p class="lead">Summary of findings</p>
 
-        <ul class="result-list">
-          <li><strong>Specialist demonstrations:</strong> Still Loading</li>
-          <li><strong>Imitation-only models:</strong> Still Loading</li>
-          <li><strong>Combined policy evaluation:</strong> Still Loading</li>
-        </ul>
+        <div class="image-full">
+          <h4>Loss / error over training</h4>
+          <img src="images/loss graph.webp" alt="Loss and error graph">
+        </div>
 
-        <div class="results-grid">
-          <figure>
-            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Still Loading</figcaption>
-          </figure>
-          
-          <figure>
-            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Still Loading</figcaption>
-          </figure>
-
-          <figure>
-            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Still Loading</figcaption>
-          </figure>
+        <div class="image-full">
+          <h4>Training map (visualized)</h4>
+          <img src="images/map.png" alt="Map lifeless.xp visualized">
         </div>
       </div>
     </section>
 
     <section id="expected" class="section alt">
       <div class="container">
-        <h2><i class="fa fa-check"></i> Expected Outcomes</h2>
+        <h2><i class="fa fa-check"></i> Further Expected Outcomes</h2>
         <ol>
           <li>A trained imitation learning model capable of playing XPilot competently using data from multiple experts.</li>
           <li>Insight into whether diverse training sources improve generalization and performance compared to single-expert imitation.</li>
+          <li>Compare combined-policy performance to single-expert and multi-task approaches.</li>
+
         </ol>
       </div>
     </section>
 
     <section id="future" class="section alt">
       <div class="container">
-        <h2><i class="fa fa-lightbulb"></i> Future Work</h2>
+        <h2>Future Work</h2>
         <ol>
           <li>Fine-tune the combined model with reinforcement learning.</li>
-          <br>
+          <li>Compare combined-policy performance to single-expert and multi-task approaches.</li>
         </ol>
       </div>
     </section>
 
     <section id="contact" class="section contact">
       <div class="container">
-        <h2><i class="fa fa-envelope"></i> Contact</h2>
-        <p><strong>Muhammad Abdullah</strong><br/>COM 407 @ Connecticut College</p>
+        <h2>Contact</h2>
+        <p><strong>Muhammad Abdullah</strong><br>COM 407 · Connecticut College</p>
         <p>Email: <a href="mailto:mabdullah@conncoll.edu">mabdullah@conncoll.edu</a></p>
-        <p>
-          GitHub: <a href="https://github.com/mabdullah1010" target="_blank" rel="noopener">github.com/mabdullah1010</a>
-          &nbsp;•&nbsp;
-          LinkedIn: <a href="https://www.linkedin.com/in/iammuhammadabdullah" target="_blank" rel="noopener">https://www.linkedin.com/in/iammuhammadabdullah/</a>
-        </p>
+        <p>GitHub: <a href="https://github.com/mabdullah1010" target="_blank" rel="noopener">github.com/mabdullah1010</a></p>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <small>© Muhammad Abdullah (COM 407) • Project showcase</small>
+      <small>© Muhammad Abdullah (COM 407)</small>
     </div>
   </footer>
-
 </body>
 </html>
