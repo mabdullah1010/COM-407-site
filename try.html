@@ -3,196 +3,314 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Imitation Learning for Xpilot - Muhammad Abdullah (COM 407)</title>
-
+  <title>Combined Policy Imitation Learning on Specialized GA Bots - Muhammad Abdullah (COM 407)</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pap3X...replaceWithFullHash..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css">
-  <style>html { scroll-behavior: smooth; }</style>
+  <style>html{scroll-behavior:smooth}</style>
 </head>
-
 <body>
   <header class="site-header">
     <div class="container nav-wrap">
       <a class="brand" href="#home">
         <span class="logo">🌐</span>
-        <span class="brand-text">Muhammad Abdullah - COM 407</span>
+        <span class="brand-text">Muhammad Abdullah , COM 407</span>
       </a>
-
       <input id="nav-toggle" type="checkbox" class="nav-toggle" />
-      <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
-        <span></span>
-      </label>
-
+      <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true"><span></span></label>
       <nav class="nav">
-        <a href="#home"><i class="fa fa-house"></i> Home</a>
-        <a href="#overview"><i class="fa fa-book-open"></i> Overview</a>
-        <a href="#methods"><i class="fa fa-cogs"></i> Methodology</a>
-        <a href="#results"><i class="fa fa-chart-line"></i> Results</a>
-        <a href="#future"><i class="fa fa-lightbulb"></i> Future Work</a>
-        <a href="#contact"><i class="fa fa-envelope"></i> Contact</a>
+        <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#overview"><i class="fa-solid fa-book-open"></i> Overview</a>
+        <a href="#gas"><i class="fa-solid fa-robot"></i> GA Experts</a>
+        <a href="#data"><i class="fa-solid fa-database"></i> Data</a>
+        <a href="#models"><i class="fa-solid fa-cogs"></i> Models</a>
+        <a href="#combined"><i class="fa-solid fa-layer-group"></i> Combined Policy</a>
+        <a href="#results"><i class="fa-solid fa-chart-line"></i> Results</a>
+        <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
       </nav>
     </div>
   </header>
 
   <main>
     <section id="home" class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <h1>Imitation Learning for Xpilot</h1>
-          <p class="subtitle">Training robust agents from multiple specialists using structured-state demonstrations - <strong>COM 407</strong></p>
-          <p>
-            This project focuses on imitation learning in the Xpilot environment. The primary goal is to record demonstrations from several specialist agents, train behavior cloning models, and evaluate whether a combined policy can outperform each specialist.
-          </p>
-          <p class="hero-ctas">
-            <a class="btn" href="#overview">View Project Details</a>
-            <a class="btn btn-outline" href="proposal.pdf" download>View Proposal (PDF)</a>
+      <div class="container hero-inner">
+        <div class="hero-left">
+          <h1>Combined Policy Imitation Learning on Specialized GA Bots</h1>
+          <p class="subtitle">Train specialist GA experts, collect large-scale demonstrations, train expert networks, and combine them with a gating policy.</p>
+          <p class="summary">This project builds three genetic-algorithm specialists (Thruster, Shooter, Navigator), records millions of ticks of structured state-action data, trains per-expert neural imitation models, and produces a mixture-of-experts combined policy that blends specialist strengths.</p>
+          <p class="cta-row">
+            <a class="btn" href="#overview">Read overview</a>
+            <a class="btn btn-outline" href="CI final project.pdf" download>Download report</a>
           </p>
         </div>
-
-        <div class="hero-media">
-          <img src="images/agent_demo.gif" alt="Agent demo GIF (placeholder)" />
-          <figcaption class="caption">Agent demonstration</figcaption>
+        <div class="hero-right">
+          <img src="images/combine1.gif" alt="Combined policy demonstration GIF" class="fit-img">
         </div>
       </div>
     </section>
 
     <section id="overview" class="section">
       <div class="container">
-        <h2><i class="fa fa-book-open"></i> Overview</h2>
-        <p class="lead">
-          <strong>Motivation:</strong> Reinforcement learning in Xpilot is valuable but data intensive. A good imitation system for Xpilot is not yet established. The project studies whether combining demonstrations from agents with different specialties yields a better overall agent.
-        </p>
-
-        <h3>Objectives</h3>
-        <ul class="feature-list">
-          <li><i class="fa fa-dot-circle"></i> Record demonstration data from multiple specialist agents (e.g. dodger, shooter etc).</li>
-          <li><i class="fa fa-dot-circle"></i> Train behavior cloning models and a combined model using structured-state inputs.</li>
-          <li><i class="fa fa-dot-circle"></i> Evaluate and compare performance of specialist agents and the combined agent.</li>
-        </ul>
-
-        <div class="flow">
-          <strong>Idea flow:</strong>
-          <span>Environment -&gt; Structured State -&gt; Demonstrations -&gt; Behavior Cloning -&gt; Evaluation</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="methods" class="section alt">
-      <div class="container">
-        <h2><i class="fa fa-cogs"></i> Methodology</h2>
-
-        <h3>Environment design</h3>
-        <p>
-          Xpilot is a 2D arena with agents, projectiles, powerups, and walls. Episodes terminate on agent death or a time limit. An environment wrapper will expose a normalized structured state vector and accept discrete actions.
-        </p>
-
-        <h3>Structured-state representation</h3>
-        <p>
-          Observations are fixed-length numeric vectors: agent state x, y, v, heading; enemies with relative distance, heading etc; bullets with dist, vel, heading; and wall distances.
-        </p>
-
-        <h3>Data collection and experts</h3>
-        <p>
-          I will create or use specialist agents to generate demonstrations: e.g. a dodger focused on survival, a shooter focused on accuracy. Each agent will run multiple episodes and log state-action pairs for training.
-        </p>
-
-        <h3>Imitation training</h3>
-        <p>
-          Train behavior cloning models using supervised learning.
-        </p>
-
-        <div class="two-col">
-          <div>
-            <h4>Key hyperparameters</h4>
-            <ul>
-              <li><i class="fa fa-check"></i> Learning rate: Still Loading</li>
-              <li><i class="fa fa-check"></i> Batch size: Still Loading</li>
-              <li><i class="fa fa-check"></i> Epochs / early stopping: Still Loading</li>
-            </ul>
+        <h2>Overview</h2>
+        <p class="lead">Goal: produce an end-to-end imitation policy for X-Pilot that controls all four discrete actions (thrust, turnLeft, turnRight, shoot). Explore whether combining multiple specialized experts yields a stronger and more robust policy than single-expert imitation.</p>
+        <div class="info-row">
+          <div class="info-card">
+            <h3>Map</h3>
+            <p><code>lifeless.xp</code></p>
           </div>
-          <div>
-            <h4>Evaluation</h4>
-            <ul>
-              <li><i class="fa fa-check"></i> Average survival time</li>
-              <li><i class="fa fa-check"></i> Comparison to specialist agents</li>
-            </ul>
+          <div class="info-card">
+            <h3>Benchmark</h3>
+            <p>Genetic Algorithms trained and evaluated against a rule-based expert agent (Derin’s Expert).</p>
+          </div>
+          <div class="info-card">
+            <h3>Key outcome</h3>
+            <p>The combined neural policy is smoother and outperforms the separate neural experts, while GA agents remain strong baselines.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="results" class="section">
+    <section id="gas" class="section alt">
       <div class="container">
-        <h2><i class="fa fa-chart-line"></i> Results</h2>
+        <h2>Specialized GA Experts</h2>
+        <p class="lead">Three specialized Genetic Algorithm agents were evolved to emphasize different behaviors while maintaining survival competency. A separate survivor GA was run first to seed robust survival behaviors into the specialist populations.</p>
 
-        <p class="lead">Summary of findings</p>
+        <h3>Survivor GA, purpose and impact</h3>
+        <p>Before evolving specialists, a Survivor GA was trained to optimize longevity in the arena. The survivor produced reliable, high-survival chromosomes that were then injected into specialist GA populations as proven survivors. This seeding provided three benefits: faster convergence, fewer wall-crash degenerate runs, and a stable baseline so specialists could focus on their objective (thrusting, shooting, or navigation) without losing survival competence.</p>
 
-        <ul class="result-list">
-          <li><strong>Specialist demonstrations:</strong> Still Loading</li>
-          <li><strong>Imitation-only models:</strong> Still Loading</li>
-          <li><strong>Combined policy evaluation:</strong> Still Loading</li>
-        </ul>
+        <h3>Thruster (Fitness: thrust usage and score gain)</h3>
+        <p>Trained 150 generations with a mixed initial population (118 random + 10 survivor chromosomes). Learned careful thrust usage, strong wall avoidance, and strategic turning before thrusting; scored competitively against the expert system.</p>
+        <div class="image-full"><h4>Thruster GA</h4><img src="images/thruster 1.gif" alt="Thruster GA GIF" class="fit-img"></div>
 
-        <div class="results-grid">
-          <figure>
-            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Still Loading</figcaption>
-          </figure>
-          
-          <figure>
-            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Still Loading</figcaption>
-          </figure>
+        <h3>Shooter (Fitness: score)</h3>
+        <p>Trained 150 generations. Learned precise shooting, strong defensive positioning, and wall avoidance. Often halts to improve aim, exploiting aimdir mechanics; dominates the expert system in many matches.</p>
+        <div class="image-full"><h4>Shooter GA</h4><img src="images/shooter fight c.gif" alt="Shooter GA GIF" class="fit-img"></div>
 
-          <figure>
-            <img src="images/learning_curve.png" alt="Learning curve placeholder" />
-            <figcaption>Still Loading</figcaption>
-          </figure>
+        <h3>Navigator (Fitness: distance travelled)</h3>
+        <p>Trained 120 generations. Fast, exploratory, excellent at traversing the map and avoiding walls; higher top speed but slightly more prone to high-speed crashes. Effective at shooting while moving.</p>
+        <div class="image-full"><h4>Navigator GA</h4><img src="images/navigator fight.gif" alt="Navigator GA GIF" class="fit-img"></div>
+      </div>
+    </section>
+
+    <section id="data" class="section">
+      <div class="container">
+        <h2>Data Collection</h2>
+        <p class="lead">Large-scale per-tick logs were recorded while each GA expert competed against the rule-based agent. Logs contained raw variables and were normalized into 17 input features for training.</p>
+
+        <div class="info-row">
+          <div class="info-card">
+            <h3>Rows collected</h3>
+            <p>Shooter: <strong>5.0M</strong> · Navigator: <strong>5.5M</strong> · Thruster: <strong>4.8M</strong> (≈15M total)</p>
+          </div>
+          <div class="info-card">
+            <h3>Recording protocol</h3>
+            <p>Logs captured 21 raw variables per tick and were converted to 17 normalized inputs (range 0–1). Demonstrations span continuous competitive play for high-quality behavior coverage.</p>
+          </div>
+          <div class="info-card">
+            <h3>Inputs & outputs</h3>
+            <p>Inputs: 17 structured features → Outputs: 4 discrete actions (thrust, turnLeft, turnRight, shoot).</p>
+          </div>
+        </div>
+
+        <div class="inputs" style="margin-top:1rem">
+          <h4>Input features (17)</h4>
+          <ul>
+            <li>agent_heading</li>
+            <li>agent_tracking</li>
+            <li>agent_speed</li>
+            <li>agent_aim</li>
+            <li>shot_alert</li>
+            <li>front_dist</li>
+            <li>back_dist</li>
+            <li>back_left_dist</li>
+            <li>back_right_dist</li>
+            <li>closest_dist</li>
+            <li>furthest_dist</li>
+            <li>closest_angle</li>
+            <li>furthest_angle</li>
+            <li>heading_tracking_diff</li>
+            <li>closest_diff</li>
+            <li>furthest_diff</li>
+            <li>aim_diff</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section id="expected" class="section alt">
+    <section id="models" class="section alt">
       <div class="container">
-        <h2><i class="fa fa-check"></i> Expected Outcomes</h2>
-        <ol>
-          <li>A trained imitation learning model capable of playing XPilot competently using data from multiple experts.</li>
-          <li>Insight into whether diverse training sources improve generalization and performance compared to single-expert imitation.</li>
-        </ol>
+        <h2>Imitation Models</h2>
+        <p class="lead">Per-expert neural networks were trained on each expert’s demonstrations. Architectures balance capacity and dataset size to capture behavior patterns.</p>
+
+        <h3>Architectures</h3>
+        <p>All expert networks use 4 hidden layers. The first hidden layer for Thruster and Shooter is <strong>256 neurons</strong>, followed by 128 → 64 → 32. All layers are fully connected and output per-action probabilities.</p>
+        <p>Navigator had 5.5 million rows so Neural Network size had to be cut down to make it run. The first hidden layer for Navigator is <strong>196 neurons</strong>, followed by 128 → 64 → 32. All layers are fully connected and output per-action probabilities.</p>
+
+        <div class="three-row">
+          <div class="three-item">
+            <h4>Shooter (neural)</h4>
+            <img src="images/nn_shooter.gif" alt="Shooter neural network demo" class="fit-img">
+          </div>
+          <div class="three-item">
+            <h4>Thruster (neural)</h4>
+            <img src="images/nn_thruster.gif" alt="Thruster neural network demo" class="fit-img">
+          </div>
+          <div class="three-item">
+            <h4>Navigator (neural)</h4>
+            <img src="images/nn_navigator.gif" alt="Navigator neural network demo" class="fit-img">
+          </div>
+
+        </div>
+
+        <h3>Training setup</h3>
+        <p>Optimizer: Adam · Learning rate: <strong>0.001</strong> · Epochs: <strong>1,000</strong> · Train/test split: 80/20. Loss tracked and saved; early stopping applied when necessary.</p>
+
+        <h3>Per-expert test accuracies</h3>
+        <div class="performance">
+          <div class="perf-left">
+            <h3>Navigator</h3>
+            <ul class="acc-list">
+              <li>Thrust: <strong>95.90%</strong></li>
+              <li>TurnLeft: <strong>98.04%</strong></li>
+              <li>TurnRight: <strong>97.93%</strong></li>
+              <li>Shoot: <strong>98.99%</strong></li>
+              <li>Exact match (all 4): <strong>92.52%</strong></li>
+            </ul>
+          </div>
+          <div class="perf-right">
+            <h3>Shooter</h3>
+            <ul class="acc-list">
+              <li>Thrust: <strong>96.52%</strong></li>
+              <li>TurnLeft: <strong>97.99%</strong></li>
+              <li>TurnRight: <strong>97.91%</strong></li>
+              <li>Shoot: <strong>99.17%</strong></li>
+              <li>Exact match (all 4): <strong>93.39%</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="performance" style="margin-top:.6rem">
+          <div class="perf-left">
+            <h3>Thruster</h3>
+            <ul class="acc-list">
+              <li>Thrust: <strong>94.50%</strong></li>
+              <li>TurnLeft: <strong>97.84%</strong></li>
+              <li>TurnRight: <strong>97.77%</strong></li>
+              <li>Shoot: <strong>99.14%</strong></li>
+              <li>Exact match (all 4): <strong>91.08%</strong></li>
+            </ul>
+          </div>
+          <div class="perf-right">
+            <h3>Notes</h3>
+            <p>Per-action accuracies show strong imitation of expert policies. Exact-match rates indicate how often all four actions match expert simultaneously on the test set.</p>
+          </div>
+        </div>
+
+        <div class="loss-row">
+          <div class="loss-item">
+            <h4>Shooter loss</h4>
+            <img src="images/training_loss_shooter_5m.png" alt="Shooter loss curve" class="fit-img">
+          </div>
+          <div class="loss-item">
+            <h4>Thruster loss</h4>
+            <img src="images/training_loss_thruster_4.8m.png" alt="Thruster loss curve" class="fit-img">
+          </div>
+          <div class="loss-item">
+            <h4>Navigator loss</h4>
+            <img src="images/training_loss_navigator_5.5m.png" alt="Navigator loss curve" class="fit-img">
+          </div>
+
+        </div>
+        <p>The loss curves looked very smooth (except for the small peak for Navigator).</p>
+
       </div>
     </section>
 
-    <section id="future" class="section alt">
+    <section id="combined" class="section">
       <div class="container">
-        <h2><i class="fa fa-lightbulb"></i> Future Work</h2>
+        <h2>Combined Policy (Mixture of Experts)</h2>
+        <p class="lead">A gating network learns soft weights over the three experts. Each expert emits per-action probability vectors; the final action is the weighted sum of expert outputs. The result is a smooth, state-dependent blending of specialist behaviors.</p>
+
+        <h3>Gating & blending</h3>
+        <p>The gating network receives the same 17 inputs and outputs a softmax distribution [w₁,w₂,w₃]. Final action probabilities are a = w₁·a₁ + w₂·a₂ + w₃·a₃, then converted to discrete actions by argmax for deployment.</p>
+
+        <h3>Behavioral effects</h3>
+        <ul>
+          <li>Smoother movement and decision patterns, less abrupt shooting than single-expert networks.</li>
+          <li>Stronger wall avoidance due to weighting of Navigator/Thruster when near obstacles.</li>
+          <li>Better overall action selection in mixed scenarios; combined policy outperforms each neural expert in most neural-vs-neural matches.</li>
+        </ul>
+
+        <div class="image-full"><h4>Combined policy demo</h4><img src="images/combinedf.gif" alt="Combined policy demo" class="fit-img"></div>
+      </div>
+    </section>
+
+    <section id="results" class="section alt">
+      <div class="container">
+        <h2>Results & Comparative Evaluation</h2>
+        <p class="lead">A set of comparisons and performance visualizations demonstrate the strengths and weaknesses of single expert neural networks and combined neural policies.</p>
+        <p class="lead">Bots fought against each other for 5 minutes in each match.</p>
+        <p class="lead">Combined Policy easily dominated the individual specialized Neural Networks</p>
+
+        <div class="three-row">
+          <div class="three-item">
+            <h4>Thruster vs Combined</h4>
+            <img src="images/thruster_mixture.png" alt="Thruster vs Combined score" class="fit-img">
+            <p class="lead">Combined Policy Won</p>
+            <p class="lead">63.9 VS -52.2</p>
+
+
+          </div>
+          <div class="three-item">
+            <h4>Shooter vs Combined</h4>
+            <img src="images/shooter_mixture.png" alt="Shooter vs Combined score" class="fit-img">
+            <p class="lead">Combined Policy Won</p>
+            <p class="lead">44.9 VS -35.8</p>
+
+          </div>
+          <div class="three-item">
+            <h4>Navigator vs Combined</h4>
+            <img src="images/navigator_mixture.png" alt="Navigator vs Combined score" class="fit-img">
+            <p class="lead">Combined Policy Won</p>
+            <p class="lead">61.0 VS -79.6</p>
+          </div>
+        </div>
+
+        <div class="image-full"><h4>Training map (lifeless.xp)</h4><img src="images/map.png" alt="lifeless.xp map visualization" class="fit-img"></div>
+
+        <h3>Summary</h3>
+        <p>The combined neural policy produces smoother, more balanced behavior and consistently beats the separate neural experts. Compared to GA agents, the combined neural agent shows strong imitation performance but GAs still hold advantages againt Neural Networks.</p>
+        <p>The project also showed that it is quite possible to make very good Imitation bots if we train them on enough data.</p>
+
+      </div>
+    </section>
+
+    <section id="conclusions" class="section">
+      <div class="container">
+        <h2>Conclusions & Future Work</h2>
         <ol>
-          <li>Fine-tune the combined model with reinforcement learning.</li>
-          <br>
+          <li>Fine-tune the combined policy with reinforcement learning (RL) to close the gap to GA performance.</li>
+          <li>Improve gating architectures (contextual gating, hierarchical gating) for sharper expert selection.</li>
+          <li>Test transfer and robustness across maps, opponent types, and noisy inputs.</li>
+          <li>Explore distillation of the mixture into a single compact network for lower-latency deployment.</li>
         </ol>
       </div>
     </section>
 
     <section id="contact" class="section contact">
       <div class="container">
-        <h2><i class="fa fa-envelope"></i> Contact</h2>
-        <p><strong>Muhammad Abdullah</strong><br/>COM 407 @ Connecticut College</p>
+        <h2>Contact</h2>
+        <p><strong>Muhammad Abdullah</strong><br>COM 407 · Connecticut College</p>
         <p>Email: <a href="mailto:mabdullah@conncoll.edu">mabdullah@conncoll.edu</a></p>
-        <p>
-          GitHub: <a href="https://github.com/mabdullah1010" target="_blank" rel="noopener">github.com/mabdullah1010</a>
-          &nbsp;•&nbsp;
-          LinkedIn: <a href="https://www.linkedin.com/in/iammuhammadabdullah" target="_blank" rel="noopener">https://www.linkedin.com/in/iammuhammadabdullah/</a>
-        </p>
+        <p>GitHub: <a href="https://github.com/mabdullah1010" target="_blank" rel="noopener">github.com/mabdullah1010</a></p>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <small>© Muhammad Abdullah (COM 407) • Project showcase</small>
+      <small>Content based on project report and class presentation.</small>
     </div>
   </footer>
-
 </body>
 </html>

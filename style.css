@@ -1,126 +1,28 @@
 :root{
-  --bg: #0f1724;
-  --card: #0b1220;
-  --muted: #98a0b3;
-  --accent: #2dd4bf;  /* teal */
-  --accent-2: #3b82f6; /* blue */
-  --glass: rgba(255,255,255,0.04);
-  --max-width: 1000px;
-  --radius: 12px;
-  --gap: 1.25rem;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
-
-* { box-sizing: border-box; }
-html,body { height:100%; margin:0; background: linear-gradient(180deg,#071025 0%, #071622 100%); color:#e6eef6; }
-.container { max-width: var(--max-width); margin: 0 auto; padding: 2rem; }
-
-/* Header / Nav */
-.site-header { position: sticky; top:0; z-index: 50; backdrop-filter: blur(6px); background: linear-gradient(180deg, rgba(3,7,12,0.55), rgba(3,7,12,0.35)); border-bottom: 1px solid rgba(255,255,255,0.03); }
-.nav-wrap { display:flex; align-items:center; gap:1rem; justify-content:space-between; }
-
-.brand { display:flex; gap:.65rem; align-items:center; text-decoration:none; color:inherit; }
-.logo { font-size:1.5rem; }
-.brand-text { font-weight:600; letter-spacing:0.2px; }
-
-.nav { display:flex; gap:0.5rem; align-items:center; }
-.nav a { color:var(--muted); text-decoration:none; padding: .5rem .75rem; border-radius:8px; display:inline-flex; gap:.5rem; align-items:center; font-weight:500; font-size:0.95rem; }
-.nav a:hover { background: rgba(255,255,255,0.03); color: #fff; }
-
-.nav-toggle { display:none; }
-.nav-toggle-label { display:none; cursor:pointer; width:38px; height:38px; border-radius:8px; align-items:center; justify-content:center; background:transparent; border:1px solid rgba(255,255,255,0.03); }
-.nav-toggle-label span { width:20px; height:2px; background: #fff; display:block; position:relative; }
-.nav-toggle-label span::before, .nav-toggle-label span::after { content:""; position:absolute; left:0; right:0; height:2px; background:#fff; display:block; }
-.nav-toggle-label span::before { top:-6px; } .nav-toggle-label span::after { top:6px; }
-
-/* Hero */
-.hero { padding:4rem 0; }
-.hero-grid { display:grid; grid-template-columns: 1fr 420px; gap:2rem; align-items:center; }
-.hero h1 { margin:0 0 .5rem 0; font-size:2rem; line-height:1.05; }
-.subtitle { color:var(--accent); margin:0 0 1rem 0; font-weight:600; }
-.hero p { color:var(--muted); }
-.hero-media img { width:100%; border-radius:12px; border:1px solid rgba(255,255,255,0.03); background:var(--glass); }
-.caption { margin-top:.5rem; font-size:.85rem; color:var(--muted); }
-
-/* sections */
-.section { padding:3rem 0; }
-.section.alt { background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); }
-
-.lead { color:var(--muted); margin-bottom:1rem; }
-.feature-list { list-style:none; padding:0; display:grid; gap:.5rem; }
-.feature-list li { display:flex; gap:.75rem; align-items:flex-start; color:var(--muted); }
-.feature-list i { color:var(--accent); margin-top:.2rem; }
-
-/* flow */
-.flow { margin-top:1rem; padding: .75rem 1rem; background: rgba(255,255,255,0.02); border-radius:10px; color:var(--muted); }
-
-/* two column */
-.two-col { display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-top:1rem; }
-
-/* results grid */
-.results-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:1rem; margin-top:1rem; }
-.results-grid figure { margin:0; background:var(--card); padding:0.6rem; border-radius:10px; text-align:center; }
-.results-grid img { width:100%; height:160px; object-fit:cover; border-radius:8px; }
-
-/* lists */
-.result-list { list-style:none; padding:0; color:var(--muted); }
-.result-list li { margin:0.5rem 0; }
-
-/* contact */
-.contact { text-align:left; padding-bottom:4rem; }
-
-/* footer */
-.site-footer { padding:1.5rem 0; text-align:center; color:var(--muted); border-top: 1px solid rgba(255,255,255,0.02); }
-
-/* Buttons */
-.btn { display:inline-block; background: linear-gradient(90deg,var(--accent),var(--accent-2)); color:#02121a; padding:.65rem 1rem; border-radius:10px; text-decoration:none; font-weight:600; margin-right:.6rem; }
-.btn-outline { background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--accent); }
-
-/* Responsive */
-@media (max-width: 900px){
-  .hero-grid { grid-template-columns: 1fr; }
-  .results-grid { grid-template-columns: 1fr; }
-  .two-col { grid-template-columns: 1fr; }
-  .nav { position: absolute; top:70px; right:0; background: linear-gradient(180deg,#071322, #06101b); width:240px; height: calc(100vh - 80px); flex-direction: column; padding:1rem; transform: translateX(110%); transition: transform .25s ease; border-left: 1px solid rgba(255,255,255,0.03); }
-  .nav a { padding: .85rem 1rem; border-radius:8px; }
-  .nav-toggle { display:block; }
-  .nav-toggle-label { display:flex; }
-  .nav-toggle:checked ~ .nav { transform: translateX(0%); }
-  .nav-wrap { position:relative; }
-}
-
-/* small screens */
-@media (max-width: 480px){
-  .brand-text { display:none; }
-  .hero h1 { font-size:1.45rem; }
-  .container { padding:1rem; }
-}
-
-:root{
   --bg:#08101a;
   --card:#0b1520;
   --muted:#9fb0c8;
   --accent:#3b82f6;
   --accent-2:#2dd4bf;
-  --max:1100px;
+  --max:1200px;
   font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:linear-gradient(180deg,#06101a 0%,#071423 100%);color:#e8f2fb}
 .container{max-width:var(--max);margin:0 auto;padding:2rem}
-.site-header{position:sticky;top:0;background:rgba(2,6,12,0.55);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+.site-header{position:sticky;top:0;background:rgba(2,6,12,0.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:50}
 .nav-wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .brand{display:flex;align-items:center;gap:.6rem;color:inherit;text-decoration:none}
 .logo{font-size:1.4rem}
 .brand-text{font-weight:600}
-.nav{display:flex;gap:.4rem;align-items:center}
+.nav{display:flex;gap:.5rem;align-items:center}
 .nav a{color:var(--muted);text-decoration:none;padding:.5rem .75rem;border-radius:8px;display:inline-flex;gap:.5rem;align-items:center;font-weight:500}
 .nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
 .nav-toggle{display:none}
 .nav-toggle-label{display:none}
-.hero{padding:3.25rem 0}
-.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center}
-.hero-left h1{margin:0;font-size:1.9rem;line-height:1.05}
+.hero{padding:3rem 0}
+.hero-inner{display:grid;grid-template-columns:1fr 460px;gap:2rem;align-items:center}
+.hero-left h1{margin:0;font-size:1.95rem;line-height:1.05}
 .subtitle{color:var(--accent);margin:.5rem 0;font-weight:600}
 .summary{color:var(--muted);margin-bottom:1rem}
 .cta-row{margin-top:1rem}
@@ -128,6 +30,7 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#06101a 0%,#071
 .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)}
 .hero-right img{width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
 .section{padding:2.25rem 0}
+.section.alt{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
 .lead{color:var(--muted);margin-bottom:1rem}
 .info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
 .info-card{background:var(--card);padding:1rem;border-radius:10px;color:var(--muted)}
@@ -135,16 +38,15 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#06101a 0%,#071
 .inputs ul{columns:2;margin:0;padding-left:1rem;color:var(--muted)}
 .performance{display:flex;gap:1rem;align-items:flex-start;margin-top:1rem}
 .perf-left{flex:1;background:var(--card);padding:1rem;border-radius:10px;color:var(--muted)}
-.perf-right{width:260px;background:var(--card);padding:1rem;border-radius:10px;color:var(--muted)}
+.perf-right{width:300px;background:var(--card);padding:1rem;border-radius:10px;color:var(--muted)}
 .acc-list{list-style:none;padding:0;margin:0}
 .acc-list li{margin:.45rem 0;color:#fff}
 .overall{color:var(--accent-2);margin-top:.6rem;font-weight:700}
 .image-full{margin-top:1.25rem;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);padding:1rem;border-radius:10px}
 .image-full img{width:100%;height:auto;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
-.section.alt{background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
 .contact p{color:var(--muted)}
 .site-footer{padding:1.25rem 0;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02)}
-@media(max-width:900px){
+@media(max-width:980px){
   .hero-inner{grid-template-columns:1fr;gap:1.2rem}
   .info-row{grid-template-columns:1fr;align-items:stretch}
   .two-col{grid-template-columns:1fr}
@@ -159,9 +61,63 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#06101a 0%,#071
   .nav-toggle-label span::after{top:6px}
   .nav-toggle:checked ~ .nav{transform:translateX(0%)}
 }
-
 @media(max-width:480px){
   .brand-text{display:none}
   .container{padding:1rem}
-  .hero-left h1{font-size:1.4rem}
+  .hero-left h1{font-size:1.45rem}
+}
+
+/* ---------- responsive image constraints (paste at end of style.css) ---------- */
+/* Make hero, demo, map, GIFs and full-width images fit nicely */
+.hero-right img,
+.hero-media img,
+.image-full img,
+.hero img,
+figure img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 860px;      /* prevents extremely wide images on large screens */
+  height: auto;
+  max-height: 520px;     /* prevents very tall images from overflowing */
+  object-fit: contain;   /* keep image aspect ratio and show full image */
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Slightly larger cap for wide desktop if you want bigger visuals */
+@media (min-width: 1400px) {
+  .hero-right img,
+  .image-full img {
+    max-width: 1100px;
+    max-height: 700px;
+  }
+}
+
+/* Tablet and small desktop */
+@media (max-width: 980px) {
+  .hero-right img,
+  .image-full img,
+  .hero-media img {
+    max-width: 720px;
+    max-height: 420px;
+  }
+}
+
+/* Mobile: keep images short so the page doesn't scroll awkwardly */
+@media (max-width: 480px) {
+  .hero-right img,
+  .image-full img,
+  .hero-media img,
+  figure img {
+    max-width: 100%;
+    max-height: 260px;
+  }
+}
+
+/* Extra: if any single image still looks too big, apply this class in HTML:
+   <img src="images/map.png" class="fit-img" alt="..."> and use below to override sizes. */
+.fit-img {
+  max-width: 360px;
+  max-height: 230px;
 }
