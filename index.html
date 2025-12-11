@@ -86,16 +86,37 @@
         <p>Before evolving specialists, a Survivor GA was trained to optimize longevity in the arena. The survivor produced reliable, high-survival chromosomes that were then injected into specialist GA populations as proven survivors. This seeding provided three benefits: faster convergence, fewer wall-crash degenerate runs, and a stable baseline so specialists could focus on their objective (thrusting, shooting, or navigation) without losing survival competence.</p>
 
         <h3>Thruster (Fitness: thrust usage and score gain)</h3>
-        <p>Trained 150 generations with a mixed initial population (118 random + 10 survivor chromosomes). Learned careful thrust usage, strong wall avoidance, and strategic turning before thrusting; scored competitively against the expert system.</p>
+        <p>Trained 150 generations with a mixed initial population (118 random + 10 survivor chromosomes).</p>
+        <p>Learned strong survival behavior, no wall crashes.</p>
+        <p>Used thrust only when needed, resulting in higher overall speed.</p>
+        <p>Developed a strategy of turning near walls to align perpendicular before thrusting.</p>
+        <p>Surprisingly learned to shoot and dodge bullets well, even without score-based fitness.</p>
+        <p>Scored 4800 vs 4700 against the expert agent.</p>
+        <p>Prioritized avoiding wall crashes over avoiding shots.</p>
+        <p>No consistent domination, bots frequently rotated between 1st and 2nd place.</p>
         <div class="image-full"><h4>Thruster GA</h4><video src="images/thrusterGA.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
 
 
         <h3>Shooter (Fitness: score)</h3>
-        <p>Trained 150 generations. Learned precise shooting, strong defensive positioning, and wall avoidance. Often halts to improve aim, exploiting aimdir mechanics; dominates the expert system in many matches.</p>
+        <p>Trained 150 generations. Learned precise shooting, strong defensive positioning, and wall avoidance.</p>
+        <p>Even during training, the score difference between expert system and training bots was 900 points (600 vs -300)</p>
+        <p>The bots learnt to move slowly.</p>
+        <p>Has amazing wall avoidance.</p>
+        <p>Comes right in front of the enemy and stops. 
+          Exploits the fact that aimdir doesn’t work well when bot is not moving. 
+          keeps on shooting and moves back due to backward force from shooting.</p>
+        <p>Sometimes crashes into enemy but easily dominates the match against expert system.</p>          
         <div class="image-full"><h4>Shooter GA</h4><video src="images/shooter_ga.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
 
         <h3>Navigator (Fitness: distance travelled)</h3>
-        <p>Trained 120 generations. Fast, exploratory, excellent at traversing the map and avoiding walls; higher top speed but slightly more prone to high-speed crashes. Effective at shooting while moving.</p>
+        <p>Trained 120 generations. Fast, exploratory, excellent at traversing the map and avoiding walls</p>
+        <p>Quickly moves between top and bottom section.</p>
+        <p>Fastest out of all GAs.</p>
+        <p>Very good wall avoidance.</p>
+        <p>Good Shooting.</p>
+        <p>More prone to getting shot.</p>
+        <p>Unlike thruster, it accelerates in open space.</p>
+        <p>Very good at shooting while moving past the enemy.</p>
         <div class="image-full"><h4>Navigator GA</h4><video src="images/nav_f.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
 
       </div>
@@ -158,18 +179,35 @@
         <div class="three-row">
           <div class="three-item">
             <h4>Shooter (neural)</h4>
+            <p>Good at wall avoidance.</p>
+            <p>Accelerates when needed.</p>
+            <p>Turns towards enemy and shoots.</p>
+            <p>Shoots Abruptly.</p>
+            <p>Bullet avoidance is not impressive.</p>
+            <p>Can come out of top corners.</p>
+            <p>Can crash at very tough spots.</p>
+
             <div class="image-full"><video src="images/nn_shooter.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
             
           </div>
           <div class="three-item">
             <h4>Thruster (neural)</h4>
-            <div class="image-full"><video src="images/nn_shooter.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
-
+            <div class="image-full"><video src="images/nn_thruster.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+            <p>Good at wall avoidance.</p>
+            <p>Makes very good use of thrust, just like GA.</p>
+            <p>Shoots Abruptly.</p>
+            <p>Can come out of top corners.</p>
+            <p>Can crash at very tough spots.</p>
           </div>
           <div class="three-item">
             <h4>Navigator (neural)</h4>
-            <div class="image-full"><video src="images/nn_shooter.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
-
+            <div class="image-full"><video src="images/nn_navigator.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+            <p>Good at wall  avoidance.</p>
+            <p>Accelerates alot.</p>
+            <p>Fastest Neural Network Bot.</p>
+            <p>Bullet avoidance is not impressive.</p>
+            <p>Can come out of top corners.</p>
+            <p>Can crash at very high speeds.</p>
           </div>
 
         </div>
@@ -253,6 +291,12 @@
           <li>Better overall action selection in mixed scenarios; combined policy outperforms each neural expert in most neural-vs-neural matches.</li>
         </ul>
         <div class="image-full"><h4>Combined policy demo</h4><video src="images/combined_f.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+        <p>The combined policy inherits the navigation and wall-avoidance strengths of Navigator/Thruster and the precision of Shooter.</p>
+        <p>It behaves much smoother than individual neural experts (fewer abrupt shots, better obstacle avoidance).</p>
+        <p>Neural-vs-neural matches the combined model consistently outperforms the separate neural experts.</p>
+        <p></p>
+        <p>In direct GA-vs-GA comparisons, the original GAs still outperform the combined neural policy.</p>
+        <p>The combined policy can also occasionally over-emphasize Navigator in open spaces and adopt risky high-speed movement.</p>
 
       </div>
     </section>

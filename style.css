@@ -67,8 +67,6 @@ html,body{height:100%;margin:0;background:linear-gradient(180deg,#06101a 0%,#071
   .hero-left h1{font-size:1.45rem}
 }
 
-/* ---------- responsive image constraints (paste at end of style.css) ---------- */
-/* Make hero, demo, map, GIFs and full-width images fit nicely */
 .hero-right img,
 .hero-media img,
 .image-full img,
@@ -77,15 +75,14 @@ figure img {
   display: block;
   margin: 0 auto;
   width: 100%;
-  max-width: 860px;      /* prevents extremely wide images on large screens */
+  max-width: 860px;      
   height: auto;
-  max-height: 520px;     /* prevents very tall images from overflowing */
-  object-fit: contain;   /* keep image aspect ratio and show full image */
+  max-height: 520px;     
+  object-fit: contain;   
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.04);
 }
 
-/* Slightly larger cap for wide desktop if you want bigger visuals */
 @media (min-width: 1400px) {
   .hero-right img,
   .image-full img {
@@ -94,7 +91,6 @@ figure img {
   }
 }
 
-/* Tablet and small desktop */
 @media (max-width: 980px) {
   .hero-right img,
   .image-full img,
@@ -104,7 +100,6 @@ figure img {
   }
 }
 
-/* Mobile: keep images short so the page doesn't scroll awkwardly */
 @media (max-width: 480px) {
   .hero-right img,
   .image-full img,
