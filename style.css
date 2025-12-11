@@ -121,3 +121,7 @@ figure img {
   max-width: 360px;
   max-height: 230px;
 }
+.zoom-video {
+    transform: scale(1.5); /* increase 1.5 → 2 or more for stronger zoom */
+    transform-origin: center; /* where the zoom focuses */
+}
