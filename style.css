@@ -115,13 +115,7 @@ figure img {
   }
 }
 
-/* Extra: if any single image still looks too big, apply this class in HTML:
-   <img src="images/map.png" class="fit-img" alt="..."> and use below to override sizes. */
 .fit-img {
-  max-width: 360px;
-  max-height: 230px;
-}
-.zoom-video {
-    transform: scale(1.5); /* increase 1.5 → 2 or more for stronger zoom */
-    transform-origin: center; /* where the zoom focuses */
+  max-width: 540px;
+  max-height: 345px;
 }

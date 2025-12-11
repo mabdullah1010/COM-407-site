@@ -50,8 +50,7 @@
           </p>
         </div>
         <div class="hero-right">
-          <video src="images/combined_f.mp4" class="fit-img zoom-video" autoplay loop muted playsinline></video>
-
+          <video src="images/combineddemo.mp4" class="fit-img" autoplay loop muted playsinline> Your browser does not support the video tag.</video>
         </div>
       </div>
     </section>
@@ -88,15 +87,17 @@
 
         <h3>Thruster (Fitness: thrust usage and score gain)</h3>
         <p>Trained 150 generations with a mixed initial population (118 random + 10 survivor chromosomes). Learned careful thrust usage, strong wall avoidance, and strategic turning before thrusting; scored competitively against the expert system.</p>
-        <div class="image-full"><h4>Thruster GA</h4><img src="images/thruster 1.gif" alt="Thruster GA GIF" class="fit-img"></div>
+        <div class="image-full"><h4>Thruster GA</h4><video src="images/thrusterGA.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+
 
         <h3>Shooter (Fitness: score)</h3>
         <p>Trained 150 generations. Learned precise shooting, strong defensive positioning, and wall avoidance. Often halts to improve aim, exploiting aimdir mechanics; dominates the expert system in many matches.</p>
-        <div class="image-full"><h4>Shooter GA</h4><img src="images/shooter f b.gif" alt="Shooter GA GIF" class="fit-img"></div>
+        <div class="image-full"><h4>Shooter GA</h4><video src="images/shooter_ga.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
 
         <h3>Navigator (Fitness: distance travelled)</h3>
         <p>Trained 120 generations. Fast, exploratory, excellent at traversing the map and avoiding walls; higher top speed but slightly more prone to high-speed crashes. Effective at shooting while moving.</p>
-        <div class="image-full"><h4>Navigator GA</h4><img src="images/navigator fight.gif" alt="Navigator GA GIF" class="fit-img"></div>
+        <div class="image-full"><h4>Navigator GA</h4><video src="images/nav_f.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+
       </div>
     </section>
 
@@ -157,15 +158,18 @@
         <div class="three-row">
           <div class="three-item">
             <h4>Shooter (neural)</h4>
-            <img src="images/nn_shooter.gif" alt="Shooter neural network demo" class="fit-img">
+            <div class="image-full"><video src="images/nn_shooter.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+            
           </div>
           <div class="three-item">
             <h4>Thruster (neural)</h4>
-            <img src="images/nn_thruster.gif" alt="Thruster neural network demo" class="fit-img">
+            <div class="image-full"><video src="images/nn_shooter.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+
           </div>
           <div class="three-item">
             <h4>Navigator (neural)</h4>
-            <img src="images/nn_navigator.gif" alt="Navigator neural network demo" class="fit-img">
+            <div class="image-full"><video src="images/nn_shooter.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
+
           </div>
 
         </div>
@@ -248,8 +252,8 @@
           <li>Stronger wall avoidance due to weighting of Navigator/Thruster when near obstacles.</li>
           <li>Better overall action selection in mixed scenarios; combined policy outperforms each neural expert in most neural-vs-neural matches.</li>
         </ul>
+        <div class="image-full"><h4>Combined policy demo</h4><video src="images/combined_f.mp4" class="fit-img" autoplay loop muted playsinline>Your browser does not support the video tag.</video></div>
 
-        <div class="image-full"><h4>Combined policy demo</h4><img src="images/combinedf.gif" alt="Combined policy demo" class="fit-img"></div>
       </div>
     </section>
 
